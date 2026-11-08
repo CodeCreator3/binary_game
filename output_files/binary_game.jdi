@@ -1,0 +1,16 @@
+<sld_project_info>
+  <project>
+    <hash md5_digest_80b="9499aa89400b4984eb4e"/>
+  </project>
+  <file_info>
+    <file device="10M50DAF484C7G" path="binary_game.sof" usercode="0xFFFFFFFF"/>
+  </file_info>
+  <sld_infos>
+    <sld_info hpath="flash_controller:u_flash_controller|max10_flash:u_flash" name="u_flash">
+      <assignment_values>
+        <assignment_value text="QSYS_NAME max10_flash HAS_SOPCINFO 1 GENERATION_ID 1794119067"/>
+      </assignment_values>
+      <parameters/>
+    </sld_info>
+  </sld_infos>
+</sld_project_info>

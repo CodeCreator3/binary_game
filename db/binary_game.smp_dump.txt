@@ -1,0 +1,50 @@
+
+State Machine - |binary_game|flash_controller:u_flash_controller|state
+Name state.WAIT_READ state.READ_WORD state.WAIT_WRITE_BUSY state.WAIT_WRITE_ACCEPT state.WRITE_WORD state.WAIT_ERASE_BUSY state.ERASE_HOLD state.ERASE_CMD state.UNPROTECT_WAIT state.UNPROTECT_CMD state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 0 0 0 
+state.UNPROTECT_CMD 0 0 0 0 0 0 0 0 0 1 1 
+state.UNPROTECT_WAIT 0 0 0 0 0 0 0 0 1 0 1 
+state.ERASE_CMD 0 0 0 0 0 0 0 1 0 0 1 
+state.ERASE_HOLD 0 0 0 0 0 0 1 0 0 0 1 
+state.WAIT_ERASE_BUSY 0 0 0 0 0 1 0 0 0 0 1 
+state.WRITE_WORD 0 0 0 0 1 0 0 0 0 0 1 
+state.WAIT_WRITE_ACCEPT 0 0 0 1 0 0 0 0 0 0 1 
+state.WAIT_WRITE_BUSY 0 0 1 0 0 0 0 0 0 0 1 
+state.READ_WORD 0 1 0 0 0 0 0 0 0 0 1 
+state.WAIT_READ 1 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |binary_game|flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|avmm_read_valid_state
+Name avmm_read_valid_state.READ_VALID_IDLE avmm_read_valid_state.READ_VALID_PRE_READING avmm_read_valid_state.READ_VALID_READING 
+avmm_read_valid_state.READ_VALID_IDLE 0 0 0 
+avmm_read_valid_state.READ_VALID_READING 1 0 1 
+avmm_read_valid_state.READ_VALID_PRE_READING 1 1 0 
+
+State Machine - |binary_game|flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|read_state
+Name read_state.READ_STATE_PULSE_SE read_state.READ_STATE_CLEAR read_state.READ_STATE_FINAL read_state.READ_STATE_READY read_state.READ_STATE_DUMMY read_state.READ_STATE_SETUP read_state.READ_STATE_ADDR read_state.READ_STATE_IDLE 
+read_state.READ_STATE_IDLE 0 0 0 0 0 0 0 0 
+read_state.READ_STATE_ADDR 0 0 0 0 0 0 1 1 
+read_state.READ_STATE_SETUP 0 0 0 0 0 1 0 1 
+read_state.READ_STATE_DUMMY 0 0 0 0 1 0 0 1 
+read_state.READ_STATE_READY 0 0 0 1 0 0 0 1 
+read_state.READ_STATE_FINAL 0 0 1 0 0 0 0 1 
+read_state.READ_STATE_CLEAR 0 1 0 0 0 0 0 1 
+read_state.READ_STATE_PULSE_SE 1 0 0 0 0 0 0 1 
+
+State Machine - |binary_game|flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|erase_state
+Name erase_state.ERASE_STATE_ERROR erase_state.ERASE_STATE_RESET erase_state.ERASE_STATE_WAIT_DONE erase_state.ERASE_STATE_WAIT_BUSY erase_state.ERASE_STATE_ADDR erase_state.ERASE_STATE_IDLE 
+erase_state.ERASE_STATE_IDLE 0 0 0 0 0 0 
+erase_state.ERASE_STATE_ADDR 0 0 0 0 1 1 
+erase_state.ERASE_STATE_WAIT_BUSY 0 0 0 1 0 1 
+erase_state.ERASE_STATE_WAIT_DONE 0 0 1 0 0 1 
+erase_state.ERASE_STATE_RESET 0 1 0 0 0 1 
+erase_state.ERASE_STATE_ERROR 1 0 0 0 0 1 
+
+State Machine - |binary_game|flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|write_state
+Name write_state.WRITE_STATE_ERROR write_state.WRITE_STATE_RESET write_state.WRITE_STATE_WAIT_DONE write_state.WRITE_STATE_WAIT_BUSY write_state.WRITE_STATE_WRITE write_state.WRITE_STATE_ADDR write_state.WRITE_STATE_IDLE 
+write_state.WRITE_STATE_IDLE 0 0 0 0 0 0 0 
+write_state.WRITE_STATE_ADDR 0 0 0 0 0 1 1 
+write_state.WRITE_STATE_WRITE 0 0 0 0 1 0 1 
+write_state.WRITE_STATE_WAIT_BUSY 0 0 0 1 0 0 1 
+write_state.WRITE_STATE_WAIT_DONE 0 0 1 0 0 0 1 
+write_state.WRITE_STATE_RESET 0 1 0 0 0 0 1 
+write_state.WRITE_STATE_ERROR 1 0 0 0 0 0 1 

@@ -1,0 +1,89 @@
+------------------------------------------------------------
+Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'CLOCK'
+Slack : -26.646
+TNS   : -1540.686
+
+Type  : Slow 1200mV 85C Model Setup 'flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|flash_se_neg_reg'
+Slack : -6.863
+TNS   : -6.863
+
+Type  : Slow 1200mV 85C Model Hold 'CLOCK'
+Slack : 0.166
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|flash_se_neg_reg'
+Slack : 6.277
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLOCK'
+Slack : -3.000
+TNS   : -471.256
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|flash_se_neg_reg'
+Slack : -1.672
+TNS   : -3.284
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'u_flash_controller|u_flash|onchip_flash_0|altera_onchip_flash_block|ufm_block|osc'
+Slack : 90.672
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Setup 'CLOCK'
+Slack : -24.099
+TNS   : -1394.234
+
+Type  : Slow 1200mV 0C Model Setup 'flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|flash_se_neg_reg'
+Slack : -6.248
+TNS   : -6.248
+
+Type  : Slow 1200mV 0C Model Hold 'CLOCK'
+Slack : -0.066
+TNS   : -0.066
+
+Type  : Slow 1200mV 0C Model Hold 'flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|flash_se_neg_reg'
+Slack : 5.702
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLOCK'
+Slack : -3.000
+TNS   : -470.932
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|flash_se_neg_reg'
+Slack : -1.676
+TNS   : -3.245
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'u_flash_controller|u_flash|onchip_flash_0|altera_onchip_flash_block|ufm_block|osc'
+Slack : 90.682
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Setup 'CLOCK'
+Slack : -10.323
+TNS   : -522.394
+
+Type  : Fast 1200mV 0C Model Setup 'flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|flash_se_neg_reg'
+Slack : -2.982
+TNS   : -2.982
+
+Type  : Fast 1200mV 0C Model Hold 'CLOCK'
+Slack : 0.147
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|flash_se_neg_reg'
+Slack : 2.222
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CLOCK'
+Slack : -3.000
+TNS   : -397.777
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|flash_se_neg_reg'
+Slack : -1.535
+TNS   : -3.041
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'u_flash_controller|u_flash|onchip_flash_0|altera_onchip_flash_block|ufm_block|osc'
+Slack : 90.684
+TNS   : 0.000
+
+------------------------------------------------------------
