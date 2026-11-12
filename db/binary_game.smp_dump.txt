@@ -1,17 +1,11 @@
 
-State Machine - |binary_game|flash_controller:u_flash_controller|state
-Name state.WAIT_READ state.READ_WORD state.WAIT_WRITE_BUSY state.WAIT_WRITE_ACCEPT state.WRITE_WORD state.WAIT_ERASE_BUSY state.ERASE_HOLD state.ERASE_CMD state.UNPROTECT_WAIT state.UNPROTECT_CMD state.IDLE 
-state.IDLE 0 0 0 0 0 0 0 0 0 0 0 
-state.UNPROTECT_CMD 0 0 0 0 0 0 0 0 0 1 1 
-state.UNPROTECT_WAIT 0 0 0 0 0 0 0 0 1 0 1 
-state.ERASE_CMD 0 0 0 0 0 0 0 1 0 0 1 
-state.ERASE_HOLD 0 0 0 0 0 0 1 0 0 0 1 
-state.WAIT_ERASE_BUSY 0 0 0 0 0 1 0 0 0 0 1 
-state.WRITE_WORD 0 0 0 0 1 0 0 0 0 0 1 
-state.WAIT_WRITE_ACCEPT 0 0 0 1 0 0 0 0 0 0 1 
-state.WAIT_WRITE_BUSY 0 0 1 0 0 0 0 0 0 0 1 
-state.READ_WORD 0 1 0 0 0 0 0 0 0 0 1 
-state.WAIT_READ 1 0 0 0 0 0 0 0 0 0 1 
+State Machine - |binary_game|state
+Name state.SAVING state.GAMEPLAY state.MENU state.INITIALIZING state.INITIALIZING_MEMORY 
+state.INITIALIZING_MEMORY 0 0 0 0 0 
+state.INITIALIZING 0 0 0 1 1 
+state.MENU 0 0 1 0 1 
+state.GAMEPLAY 0 1 0 0 1 
+state.SAVING 1 0 0 0 1 
 
 State Machine - |binary_game|flash_controller:u_flash_controller|max10_flash:u_flash|altera_onchip_flash:onchip_flash_0|altera_onchip_flash_avmm_data_controller:avmm_data_controller|avmm_read_valid_state
 Name avmm_read_valid_state.READ_VALID_IDLE avmm_read_valid_state.READ_VALID_PRE_READING avmm_read_valid_state.READ_VALID_READING 

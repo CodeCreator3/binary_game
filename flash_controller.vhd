@@ -10,7 +10,8 @@ entity flash_controller is
         start_load   : in  std_logic;
         data_in      : in  std_logic_vector(31 downto 0);
         data_out     : out std_logic_vector(31 downto 0);
-        busy         : out std_logic
+        busy         : out std_logic;
+        current_state: out std_logic_vector(3 downto 0)
     );
 end entity flash_controller;
 
@@ -18,27 +19,30 @@ architecture rtl of flash_controller is
 
     type state_t is (
         IDLE,
-        UNPROTECT_CMD,      -- Clear write protection in CSR Addr 0
-        UNPROTECT_WAIT,
-        ERASE_CMD,          -- Trigger sector erase in CSR Addr 1
-        ERASE_HOLD,         -- Wait 2 cycles for busy bit to latch
-        WAIT_ERASE_BUSY,    -- Poll CSR Addr 1 until busy bit drops
-        WRITE_WORD,         -- Assert data write
-        WAIT_WRITE_ACCEPT,  -- Wait for waitrequest = '0'
-        WAIT_WRITE_BUSY,    -- Wait until internal flash write finishes
-        READ_WORD,          -- Assert data read
-        WAIT_READ           -- Capture readdata
+        UNPROTECT_CMD,      -- Assert write to clear sector protection (CSR Addr 1)
+        UNPROTECT_WAIT,     -- Deassert write after 1 cycle
+        ERASE_CMD,          -- Assert write to trigger Sector 1 erase (CSR Addr 1)
+        ERASE_HOLD,         -- Deassert write and wait 4 cycles for busy bit to latch
+        WAIT_ERASE_BUSY,    -- Poll Status Register (CSR Addr 0) until busy drops
+        WRITE_WORD,         -- Assert data write and wait for waitrequest = '0'
+        WAIT_WRITE_BUSY,    -- Poll Status Register (CSR Addr 0) until write finishes
+        READ_WORD,          -- Assert data read and wait for waitrequest = '0'
+        WAIT_READ           -- Capture readdata when readdatavalid = '1'
     );
     signal state : state_t := IDLE;
+    attribute preserve : boolean;
+    attribute preserve of state : signal is true;
+
     signal wait_cnt : integer range 0 to 7 := 0;
 
-    -- UFM Avalon-MM registers
+    -- UFM Avalon-MM CSR signals (Addr 0 = Status, Addr 1 = Control)
     signal csr_addr        : std_logic := '0';
     signal csr_write       : std_logic := '0';
     signal csr_read        : std_logic := '0';
     signal csr_writedata   : std_logic_vector(31 downto 0) := (others => '0');
     signal csr_readdata    : std_logic_vector(31 downto 0);
 
+    -- UFM Avalon-MM Data signals
     signal data_write      : std_logic := '0';
     signal data_read       : std_logic := '0';
     signal data_addr       : std_logic_vector(16 downto 0) := (others => '0');
@@ -69,32 +73,33 @@ architecture rtl of flash_controller is
 
 begin
 
+    current_state <= std_logic_vector(to_unsigned(state_t'pos(state), current_state'length));
+
     busy <= '0' when state = IDLE else '1';
 
     process(clk, reset_n)
     begin
         if reset_n = '0' then
-            state         <= IDLE;
-            csr_addr      <= '0';
-            csr_write     <= '0';
-            csr_read      <= '0';
-            csr_writedata <= (others => '0');
-            data_write    <= '0';
-            data_read     <= '0';
-            data_addr     <= (others => '0');
-            data_out      <= (others => '0');
-            wait_cnt      <= 0;
+            state          <= IDLE;
+            csr_addr       <= '0';
+            csr_write      <= '0';
+            csr_read       <= '0';
+            csr_writedata  <= (others => '0');
+            data_write     <= '0';
+            data_read      <= '0';
+            data_addr      <= (others => '0');
+            data_writedata <= (others => '0');
+            data_out       <= (others => '0');
+            wait_cnt       <= 0;
         elsif rising_edge(clk) then
             case state is
 
                 when IDLE =>
-                    wait_cnt <= 0;
+                    csr_write <= '0';
+                    csr_read  <= '0';
+                    wait_cnt  <= 0;
                     if start_save = '1' then
-                        -- Step 1: Clear Sector Protection at CSR Addr 0
-                        csr_addr      <= '0';
-                        csr_write     <= '1';
-                        csr_writedata <= (others => '1'); -- Disable protection for all sectors
-                        state         <= UNPROTECT_CMD;
+                        state <= UNPROTECT_CMD;
                     elsif start_load = '1' then
                         data_read <= '1';
                         data_addr <= (others => '0');
@@ -102,24 +107,29 @@ begin
                     end if;
 
                 when UNPROTECT_CMD =>
-                    csr_write <= '0';
-                    state     <= UNPROTECT_WAIT;
-
-                when UNPROTECT_WAIT =>
-                    -- Step 2: Trigger Erase on Sector 1 at CSR Addr 1
+                    -- Clear Sector Protection bits [27:23] = 00000 in Control Reg (Addr 1)
                     csr_addr      <= '1';
                     csr_write     <= '1';
-                    csr_writedata <= x"00000001"; -- Sector 1 erase mask
-                    state         <= ERASE_CMD;
+                    csr_writedata <= x"F07FFFFF";
+                    state         <= UNPROTECT_WAIT;
+
+                when UNPROTECT_WAIT =>
+                    csr_write <= '0';
+                    state     <= ERASE_CMD;
 
                 when ERASE_CMD =>
-                    csr_write <= '0';
-                    csr_read  <= '1';
-                    wait_cnt  <= 0;
-                    state     <= ERASE_HOLD;
+                    -- Trigger Sector 1 Erase (bits [22:20] = 001) while keeping protection cleared
+                    csr_addr      <= '1';
+                    csr_write     <= '1';
+                    csr_writedata <= x"F01FFFFF";
+                    wait_cnt      <= 0;
+                    state         <= ERASE_HOLD;
 
                 when ERASE_HOLD =>
-                    -- Hold for 4 cycles to ensure IP internal busy bit registers
+                    -- Deassert write and switch to Status Reg (Addr 0) to poll busy bits
+                    csr_write <= '0';
+                    csr_addr  <= '0';
+                    csr_read  <= '1';
                     if wait_cnt < 4 then
                         wait_cnt <= wait_cnt + 1;
                     else
@@ -127,26 +137,26 @@ begin
                     end if;
 
                 when WAIT_ERASE_BUSY =>
-                    -- Bit 0/1 indicate erase/write operation busy
+                    -- Status Reg bits [1:0] = "00" when erase completes
                     if csr_readdata(1 downto 0) = "00" then
-                        csr_read        <= '0';
-                        data_write      <= '1';
-                        data_addr       <= (others => '0');
-                        data_writedata  <= data_in;
-                        state           <= WRITE_WORD;
+                        csr_read       <= '0';
+                        data_write     <= '1';
+                        data_addr      <= (others => '0');
+                        data_writedata <= data_in;
+                        state          <= WRITE_WORD;
                     end if;
 
                 when WRITE_WORD =>
                     if waitrequest = '0' then
                         data_write <= '0';
-                        csr_addr   <= '1';
+                        csr_addr   <= '0';
                         csr_read   <= '1';
                         wait_cnt   <= 0;
                         state      <= WAIT_WRITE_BUSY;
                     end if;
 
                 when WAIT_WRITE_BUSY =>
-                    -- Ensure physical programming finishes
+                    -- Wait 4 cycles for busy flag to register, then poll until "00"
                     if wait_cnt < 4 then
                         wait_cnt <= wait_cnt + 1;
                     elsif csr_readdata(1 downto 0) = "00" then
@@ -179,16 +189,16 @@ begin
             reset_n                 => reset_n,
             avmm_data_addr          => data_addr,
             avmm_data_read          => data_read,
-            avmm_data_write         => data_write,
             avmm_data_writedata     => data_writedata,
+            avmm_data_write         => data_write,
             avmm_data_readdata      => data_readdata,
             avmm_data_waitrequest   => waitrequest,
             avmm_data_readdatavalid => readdatavalid,
-            avmm_data_burstcount    => (others => '0'),
+            avmm_data_burstcount    => "0001",
             avmm_csr_addr           => csr_addr,
             avmm_csr_read           => csr_read,
-            avmm_csr_write          => csr_write,
             avmm_csr_writedata      => csr_writedata,
+            avmm_csr_write          => csr_write,
             avmm_csr_readdata       => csr_readdata
         );
 

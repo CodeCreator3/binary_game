@@ -6,7 +6,7 @@
    version="1.0"
    description=""
    tags="INTERNAL_COMPONENT=true"
-   categories="" />
+   categories="System" />
  <parameter name="bonusData"><![CDATA[bonusData 
 {
    element onchip_flash_0
@@ -31,7 +31,7 @@
  <parameter name="hideFromIPCatalog" value="true" />
  <parameter name="lockedInterfaceDefinition" value="" />
  <parameter name="maxAdditionalLatency" value="1" />
- <parameter name="projectName" value="" />
+ <parameter name="projectName" value="binary_game.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="0" />
  <parameter name="testBenchDutName" value="" />
@@ -68,7 +68,7 @@
    enabled="1"
    autoexport="1">
   <parameter name="AUTO_CLOCK_RATE" value="0" />
-  <parameter name="CLOCK_FREQUENCY" value="116.0" />
+  <parameter name="CLOCK_FREQUENCY" value="50.0" />
   <parameter name="CONFIGURATION_MODE">Single Uncompressed Image</parameter>
   <parameter name="CONFIGURATION_SCHEME">Internal Configuration</parameter>
   <parameter name="DATA_INTERFACE" value="Parallel" />

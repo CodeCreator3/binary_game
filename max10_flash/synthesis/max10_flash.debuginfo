@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="max10_flash" kind="system" version="20.1" fabric="QSYS">
  <!-- Format version 20.1 720 (Future versions may contain additional information.) -->
- <!-- 2026.11.07.23:24:28 -->
+ <!-- 2026.11.08.16:24:38 -->
  <!-- A collection of modules and connections -->
  <parameter name="clockCrossingAdapter">
   <type>com.altera.sopcmodel.ensemble.EClockAdapter</type>
@@ -53,7 +53,7 @@
  </parameter>
  <parameter name="generationId">
   <type>int</type>
-  <value>1794119067</value>
+  <value>1794180277</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>true</visible>
@@ -101,7 +101,7 @@
  </parameter>
  <parameter name="projectName">
   <type>java.lang.String</type>
-  <value></value>
+  <value>binary_game.qpf</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -296,7 +296,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="CLOCK_FREQUENCY">
    <type>double</type>
-   <value>116.0</value>
+   <value>50.0</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -693,7 +693,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="FLASH_RESET_CYCLE_MAX_INDEX">
    <type>int</type>
-   <value>29</value>
+   <value>12</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -701,7 +701,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="FLASH_BUSY_TIMEOUT_CYCLE_MAX_INDEX">
    <type>int</type>
-   <value>139</value>
+   <value>60</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -709,7 +709,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="FLASH_ERASE_TIMEOUT_CYCLE_MAX_INDEX">
    <type>int</type>
-   <value>40600000</value>
+   <value>17500000</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -717,7 +717,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="FLASH_WRITE_TIMEOUT_CYCLE_MAX_INDEX">
    <type>int</type>
-   <value>35380</value>
+   <value>15250</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -1675,5 +1675,5 @@ parameters are a RESULT of the module parameters. -->
   <version>20.1</version>
  </plugin>
  <reportVersion>20.1 720</reportVersion>
- <uniqueIdentifier>F83DC6CF61C1000001A1B9D468CE</uniqueIdentifier>
+ <uniqueIdentifier>F83DC6CF61C1000001A1BD7A6851</uniqueIdentifier>
 </EnsembleReport>

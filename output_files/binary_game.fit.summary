@@ -1,17 +1,17 @@
-Fitter Status : Successful - Sun Nov 08 00:01:16 2026
+Fitter Status : Successful - Wed Nov 11 18:06:03 2026
 Quartus Prime Version : 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 Revision Name : binary_game
 Top-level Entity Name : binary_game
 Family : MAX 10
 Device : 10M50DAF484C7G
 Timing Models : Final
-Total logic elements : 1,340 / 49,760 ( 3 % )
-    Total combinational functions : 1,315 / 49,760 ( 3 % )
-    Dedicated logic registers : 326 / 49,760 ( < 1 % )
-Total registers : 326
-Total pins : 64 / 360 ( 18 % )
+Total logic elements : 2,809 / 49,760 ( 6 % )
+    Total combinational functions : 2,115 / 49,760 ( 4 % )
+    Dedicated logic registers : 1,554 / 49,760 ( 3 % )
+Total registers : 1554
+Total pins : 66 / 360 ( 18 % )
 Total virtual pins : 0
-Total memory bits : 0 / 1,677,312 ( 0 % )
+Total memory bits : 5,632 / 1,677,312 ( < 1 % )
 Embedded Multiplier 9-bit elements : 0 / 288 ( 0 % )
 Total PLLs : 0 / 4 ( 0 % )
 UFM blocks : 1 / 1 ( 100 % )

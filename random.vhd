@@ -16,7 +16,7 @@ end entity random;
 architecture Behavioral of random is
 
     -- SEED must NEVER be all zeros (all 0s causes the LFSR to get stuck forever)
-    signal lfsr_reg : std_logic_vector(7 downto 0) := x"AC";
+    signal lfsr_reg : std_logic_vector(7 downto 0) := seed;
     signal feedback : std_logic;
 
 begin
